@@ -1,23 +1,16 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './controllers/user.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserService } from './services/user.service';
-import { AuthService } from './services/auth.service';
 import { ConfigModule } from '@nestjs/config';
-import { databaseConfig } from './database';
-import { JwtModule } from '@nestjs/jwt';
-import { jwtConfig } from './authentication';
-import { AuthController } from './controllers/auth.controller';
-import { Users } from './entities/users.entity';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync(databaseConfig),
-    TypeOrmModule.forFeature([Users]),
-    JwtModule.registerAsync(jwtConfig),
+    ConfigModule.forRoot({
+      envFilePath: ['.development.env'],
+    }),
+    UserModule,
   ],
-  controllers: [UserController, AuthController],
-  providers: [UserService, AuthService],
+  controllers: [],
+  providers: [],
+  exports: [ConfigModule],
 })
 export class AppModule {}

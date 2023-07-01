@@ -1,50 +1,44 @@
-import { CreateUserDto } from './create-user.dto';
+import { UpdateUserDto } from './update-user.dto';
 import { validate } from 'class-validator';
 import { ValidationError } from '@nestjs/common';
 
-describe('CreateUserDto', (): void => {
+describe('UpdateUserDto', (): void => {
   describe('name', (): void => {
-    it('should not throw error present', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+    it('should be optional', (done: jest.DoneCallback): void => {
+      const dto = new UpdateUserDto();
       dto.email = 'test@email.com';
       dto.password = 'password';
-      dto.name = 'firstname lastname';
       validate(dto).then((error: ValidationError[]): void => {
         expect(error.length).toBe(0);
         done();
       });
     });
 
-    it('should throw error when empty', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+    it('should not be empty when present', (done: jest.DoneCallback): void => {
+      const dto = new UpdateUserDto();
+      dto.name = '';
       dto.email = 'test@email.com';
       dto.password = 'password';
-
-      dto.name = '';
       validate(dto).then((error: ValidationError[]): void => {
         expect(error.length).toBe(1);
         expect(error[0].constraints.isNotEmpty).toBeDefined();
-        expect(error[0].constraints.isNotEmpty).toContain('name');
         done();
       });
     });
 
-    it('should throw error when undefined', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+    it('should not throw error when present', (done: jest.DoneCallback): void => {
+      const dto = new UpdateUserDto();
+      dto.name = 'firstname lastname';
       dto.email = 'test@email.com';
       dto.password = 'password';
-
-      dto.name = undefined;
-      validate(dto).then((error: ValidationError[]): void => {
-        expect(error.length).toBe(1);
-        expect(error[0].constraints.isNotEmpty).toBeDefined();
-        expect(error[0].constraints.isNotEmpty).toContain('name');
+      validate(dto).then((error) => {
+        expect(error.length).toBe(0);
         done();
       });
     });
 
     it('should throw error when number is present', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+      const dto = new UpdateUserDto();
       dto.email = 'test@email.com';
       dto.password = 'password';
 
@@ -58,7 +52,7 @@ describe('CreateUserDto', (): void => {
     });
 
     it('should throw error when special characters is present', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+      const dto = new UpdateUserDto();
       dto.email = 'test@email.com';
       dto.password = 'password';
 
@@ -74,7 +68,7 @@ describe('CreateUserDto', (): void => {
 
   describe('email', (): void => {
     it('should not throw error when correct format', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+      const dto = new UpdateUserDto();
       dto.name = 'name';
       dto.password = 'password';
       dto.email = 'test@email.com';
@@ -85,7 +79,7 @@ describe('CreateUserDto', (): void => {
     });
 
     it('should throw error when empty', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+      const dto = new UpdateUserDto();
       dto.name = 'name';
       dto.password = 'password';
 
@@ -97,22 +91,20 @@ describe('CreateUserDto', (): void => {
       });
     });
 
-    it('should throw error when undefined', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+    it('should be optional', (done: jest.DoneCallback): void => {
+      const dto = new UpdateUserDto();
       dto.name = 'name';
       dto.password = 'password';
 
       dto.email = undefined;
       validate(dto).then((error: ValidationError[]): void => {
-        expect(error.length).toBe(1);
-        expect(error[0].constraints.isEmail).toBeDefined();
-        expect(error[0].constraints.isEmail).toContain('email');
+        expect(error.length).toBe(0);
         done();
       });
     });
 
     it('should throw error when incorrect format', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+      const dto = new UpdateUserDto();
       dto.name = 'name';
       dto.password = 'password';
 
@@ -128,7 +120,7 @@ describe('CreateUserDto', (): void => {
 
   describe('password', (): void => {
     it('should not throw error when present', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+      const dto = new UpdateUserDto();
       dto.email = 'test@email.com';
       dto.name = 'name';
       dto.password = 'password';
@@ -139,7 +131,7 @@ describe('CreateUserDto', (): void => {
     });
 
     it('should throw error when empty', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+      const dto = new UpdateUserDto();
       dto.name = 'name';
       dto.email = 'test@email.com';
 
@@ -152,16 +144,14 @@ describe('CreateUserDto', (): void => {
       });
     });
 
-    it('should throw error when undefined', (done: jest.DoneCallback): void => {
-      const dto = new CreateUserDto();
+    it('should be optional', (done: jest.DoneCallback): void => {
+      const dto = new UpdateUserDto();
       dto.name = 'name';
       dto.email = 'test@email.com';
 
       dto.password = undefined;
       validate(dto).then((error: ValidationError[]): void => {
-        expect(error.length).toBe(1);
-        expect(error[0].constraints.isNotEmpty).toBeDefined();
-        expect(error[0].constraints.isNotEmpty).toContain('password');
+        expect(error.length).toBe(0);
         done();
       });
     });

@@ -16,7 +16,7 @@ describe('UserController', (): void => {
       user.name = dto.name;
       user.email = dto.email;
       user.password = dto.password;
-      return user;
+      return Promise.resolve(user);
     }),
     find: jest.fn(async (id: string): Promise<Users> => {
       const user = new Users();
@@ -24,7 +24,7 @@ describe('UserController', (): void => {
       user.name = 'retrieved-name';
       user.email = 'retrieved@email.com';
       user.password = 'retrieved-password';
-      return user;
+      return Promise.resolve(user);
     }),
     update: jest.fn(async (dto: UpdateUserDto, id: string): Promise<Users> => {
       const user = new Users();
@@ -32,7 +32,7 @@ describe('UserController', (): void => {
       user.name = dto.name;
       user.email = dto.email;
       user.password = dto.password;
-      return user;
+      return Promise.resolve(user);
     }),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     delete: jest.fn(async (id: string): Promise<void> => {

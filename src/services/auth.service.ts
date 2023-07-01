@@ -24,9 +24,8 @@ export class AuthService {
    * @returns {Promise<any>} object with access token property.
    */
   async generateToken(authorization: string): Promise<any> {
-    const encodedCred = btoa(`${this.clientId}:${this.clientSecret}`);
-    console.log(encodedCred, authorization);
-    if (!authorization.includes(encodedCred)) {
+    const credentials = `${this.clientId}:${this.clientSecret}`;
+    if (authorization.replace('Basic ', '') !== credentials) {
       throw new UnauthorizedException();
     }
 

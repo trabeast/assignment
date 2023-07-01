@@ -10,7 +10,6 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dtos/create-user.dto';
@@ -18,7 +17,6 @@ import { Users } from '../entities/users.entity';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { UserService } from '../services/user.service';
 import { FindUserDto } from '../dtos/find-user.dto';
-import { AuthGuard } from '../authentication';
 
 /**
  * Handles CRUD related operations for user entity.
@@ -37,7 +35,6 @@ export class UserController {
   @Header('Content-Type', 'application/json')
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
   async create(@Body() dto: CreateUserDto): Promise<Users> {
     return this.userService.add(dto);
   }
@@ -52,7 +49,6 @@ export class UserController {
   @Header('Content-Type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
   retrieve(@Param() dto: FindUserDto): Promise<Users> {
     return this.userService.find(dto.id);
   }
@@ -68,7 +64,6 @@ export class UserController {
   @Header('Content-Type', 'application/json')
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
   async update(
     @Body() updateUserDto: UpdateUserDto,
     @Param() findUserDto: FindUserDto,
@@ -82,7 +77,6 @@ export class UserController {
    */
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(AuthGuard)
   async delete(@Param() dto: FindUserDto): Promise<void> {
     await this.userService.delete(dto.id);
   }
