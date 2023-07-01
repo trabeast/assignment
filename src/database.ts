@@ -6,11 +6,11 @@ export const databaseConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
   useFactory: (configService: ConfigService) => ({
     type: 'postgres',
-    host: 'localhost',
+    host: configService.get('DATABASE_HOST'),
     port: configService.get('DATABASE_PORT'),
     username: configService.get('DATABASE_USER'),
     password: configService.get('DATABASE_PASSWORD'),
-    database: 'assignment',
+    database: configService.get('DATABASE_NAME'),
     entities: [Users],
     synchronize: true,
   }),

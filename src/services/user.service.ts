@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from '../entities/users.entity';
 import { Repository } from 'typeorm';
@@ -23,10 +23,14 @@ export class UserService {
    * @returns {Users} the newly created user data entry.
    */
   async add(dto: CreateUserDto): Promise<Users> {
-    const user = await this.convertToEntity(dto);
-    const result = await this.usersRepository.insert(user);
-    user.id = result.identifiers[0].id;
-    return user;
+    try {
+      const user = await this.convertToEntity(dto);
+      const result = await this.usersRepository.insert(user);
+      user.id = result.identifiers[0].id;
+      return user;
+    } catch {
+      throw new BadRequestException('Email already exist');
+    }
   }
 
   /**
