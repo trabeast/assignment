@@ -15,7 +15,7 @@ All application configurations are set in `.env` file. Default port is set to `3
 ## Authentication
 
 User should have the copy of `CLIENT_ID` and `CLIENT_SECRET` value pair.
-To get the access token the following requests to `/auth` endpoint.
+To get the access token do the following requests to `/auth` endpoint.
 
 ###### curl
 <pre>
