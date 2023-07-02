@@ -19,7 +19,7 @@ Please see `.env.sample` as an example.
 ## Authentication
 
 User should have the copy of `CLIENT_ID` and `CLIENT_SECRET` value pair.
-To get the access token the following requests to `/auth` endpoint.
+To get the access token do the following requests to `/auth` endpoint.
 
 ###### curl
 <pre>
@@ -90,6 +90,7 @@ curl -X PATCH --location "http://localhost:3000/users/68b45a57-ba2b-4ddd-bfbb-a8
           \"password\": \"updated_password\"
         }"
 ```
+###### response body
 ```json
 {
     "id":"68b45a57-ba2b-4ddd-bfbb-a878c5b37bd0",
