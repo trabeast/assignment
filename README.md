@@ -12,6 +12,10 @@ JWT authenticated REST endpoint to create, retrieve, update and delete a `User` 
 
 All application configurations are set in `.env` file. Default port is set to `3000`.
 
+Please see `.env.sample` as an example.
+
+**Note**: `.env` is part of `git.ignore` to avoid accidental commit.
+
 ## Authentication
 
 User should have the copy of `CLIENT_ID` and `CLIENT_SECRET` value pair.
