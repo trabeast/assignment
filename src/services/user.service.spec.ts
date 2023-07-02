@@ -6,6 +6,7 @@ import {
   InjectionToken,
   NotFoundException,
 } from '@nestjs/common';
+import { CreateUserDto } from '../dtos/create-user.dto';
 
 describe('UserService', (): void => {
   let userService: UserService;
@@ -20,12 +21,8 @@ describe('UserService', (): void => {
         const user = new Users();
         user.id = where.id;
         return Promise.resolve(user);
-      } else if (where.email === 'email') {
-        const user = new Users();
-        user.id = 'new-id';
-        return Promise.resolve(user);
       } else if (where.email === 'existing-email') {
-        return Promise.resolve(null);
+        return Promise.resolve(new Users());
       } else {
         return Promise.resolve(null);
       }
@@ -62,7 +59,7 @@ describe('UserService', (): void => {
 
   describe('add', (): void => {
     it('should create a user', (done: jest.DoneCallback): void => {
-      const newUser = new Users();
+      const newUser = new CreateUserDto();
       newUser.email = 'email';
       newUser.name = 'name';
       newUser.password = 'password';

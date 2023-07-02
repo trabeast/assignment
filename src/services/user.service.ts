@@ -31,7 +31,7 @@ export class UserService {
     const existingUser = await this.usersRepository.findOneBy({
       email: user.email,
     });
-    if (!existingUser) {
+    if (existingUser) {
       throw new BadRequestException('email already exists');
     }
 
