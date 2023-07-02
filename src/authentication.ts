@@ -4,9 +4,11 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  SetMetadata,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { Reflector } from '@nestjs/core';
 
 export const jwtConfig: JwtModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -18,6 +20,9 @@ export const jwtConfig: JwtModuleAsyncOptions = {
   inject: [ConfigService],
 };
 
+export const IS_PUBLIC_KEY = 'isPublic';
+export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
+
 /**
  * Handles authentication of token on each guarded api calls.
  */
@@ -26,6 +31,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly reflector: Reflector,
   ) {}
 
   /**
@@ -34,6 +40,15 @@ export class AuthGuard implements CanActivate {
    * @returns {boolean} true if token passed authentication. Otherwise, false.
    */
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (isPublic) {
+      return true;
+    }
+
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {

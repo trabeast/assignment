@@ -28,10 +28,10 @@ export class UserService {
    */
   async add(dto: CreateUserDto): Promise<Users> {
     const user = await this.convertToEntity(dto);
-    const existingUser = await this.usersRepository.findBy({
+    const existingUser = await this.usersRepository.findOneBy({
       email: user.email,
     });
-    if (existingUser) {
+    if (!existingUser) {
       throw new BadRequestException('email already exists');
     }
 

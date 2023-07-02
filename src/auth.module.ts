@@ -13,8 +13,9 @@ import { APP_GUARD } from '@nestjs/core';
     AuthService,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard,
+      useExisting: AuthGuard,
     },
+    AuthGuard,
   ],
   exports: [JwtModule],
 })
