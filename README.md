@@ -86,6 +86,7 @@ curl -X PATCH --location "http://localhost:3000/users/68b45a57-ba2b-4ddd-bfbb-a8
           \"password\": \"updated_password\"
         }"
 ```
+###### response body
 ```json
 {
     "id":"68b45a57-ba2b-4ddd-bfbb-a878c5b37bd0",
